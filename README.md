@@ -31,15 +31,40 @@ The course covers everything needed for the CCNA exam, including:
 
 ## Tools Used
 
-| Tool | Purpose |
-|------|---------|
-| **Cisco Packet Tracer** | Network simulation software for building and configuring virtual networks |
-| **YouTube** | Video lectures from Jeremy's IT Lab |
-| **Anki / Flashcards** | Spaced repetition for memorizing key concepts |
-| **Boson ExSim** *(optional)* | Practice exams (paid) |
+| Tool | Purpose | Stage |
+|------|---------|-------|
+| **Cisco Packet Tracer** | Cisco-built network simulator for the Jeremy's IT Lab labs | Primary — entire course |
+| **Linux Networking Lab** (`~/Desktop/setup`) | Real Linux networking using namespaces, `ip`, `tcpdump`, etc. | Supplementary — after Day 15 |
+| **GNS3** | Advanced simulator that runs real Cisco IOS firmware | Post-CCNA / CCNP prep |
+| **YouTube** | Jeremy's IT Lab video lectures | Daily |
+| **Anki / Flashcards** | Spaced repetition for memorization | Daily |
+| **Boson ExSim** *(optional, paid)* | Practice exams before sitting CCNA | Final 2-3 weeks |
 
 ### Installing Packet Tracer
-Packet Tracer is free via the [Cisco Networking Academy](https://www.netacad.com/courses/packet-tracer). You need to register a free account, then download the latest version for your OS.
+Packet Tracer is free via the [Cisco Networking Academy](https://www.netacad.com/courses/packet-tracer). Register a free account, then download the latest version for your OS.
+
+---
+
+## Tool Comparison: Packet Tracer vs Linux Setup vs GNS3
+
+Three different tools, three different jobs. Quick decision guide:
+
+| | Packet Tracer | Linux Setup (`~/Desktop/setup`) | GNS3 |
+|---|---|---|---|
+| **Realism** | Simulated Cisco | Real Linux kernel | Real Cisco IOS firmware |
+| **Cisco IOS syntax** | Yes (simulated) | No | Yes (real) |
+| **Linux / cloud skills** | No | Yes | No |
+| **Resource needs** | Light | Light | Heavy (8 GB+ RAM) |
+| **Setup effort** | Easy | Medium (sudo + scripts) | High (need IOS images) |
+| **Best for** | CCNA exam prep | Real-world infra / DevOps | CCNP / CCIE / advanced labs |
+| **CCNA exam aligned** | Yes | No (concepts only) | Yes |
+
+**My take:**
+- **Packet Tracer** wins for following this course — the labs are built for it, the CCNA exam tests Cisco IOS, and Jeremy uses it.
+- **The `setup` folder** teaches more *practical* skill per hour — real Linux networking is what production infra actually runs on. Use it to reinforce concepts after they click in Packet Tracer.
+- **GNS3** is overkill for CCNA. Pick it up later when chasing CCNP or building enterprise-grade labs.
+
+Don't try to use all three at once — it splits focus and slows progress.
 
 ---
 
@@ -50,6 +75,7 @@ CISCO-Learn/
 ├── README.md                                    # This file
 ├── Day 01 Lab - Packet Tracer Introduction.pkt  # Lab 1 - Intro to Packet Tracer
 ├── Day 02 Lab - Connecting Devices.pkt          # Lab 2 - Connecting end devices
+├── Day 03 Lab - OSI Model.pkt                   # Lab 3 - OSI Model simulation
 └── ...                                          # More labs as I progress
 ```
 
@@ -65,7 +91,7 @@ Course is broken into "Days" — one topic per day. I'm checking them off as I c
 
 - [x] **Day 01** — Introduction to Packet Tracer
 - [x] **Day 02** — Connecting Devices
-- [ ] **Day 03** — Cables and Connections
+- [x] **Day 03** — OSI Model
 - [ ] **Day 04** — Network Topology Architectures
 - [ ] **Day 05** — TCP/IP Suite & OSI Model
 - [ ] **Day 06** — Binary, Hex, and IP Addressing
@@ -119,6 +145,20 @@ I'll keep short notes per lab here for quick recall.
   - **Crossover:** PC <-> PC, Switch <-> Switch, Router <-> Router, PC <-> Router
   - **Serial (DCE/DTE):** Router <-> Router (WAN simulation)
 - Assigned IP addresses to PCs and tested connectivity using `ping`.
+
+### Day 03 — OSI Model
+- Walked through all 7 layers of the OSI model and what each one is responsible for:
+  - **Layer 7 — Application:** User-facing protocols (HTTP, FTP, DNS, SMTP)
+  - **Layer 6 — Presentation:** Encoding, encryption, compression (TLS/SSL, JPEG)
+  - **Layer 5 — Session:** Establishing/maintaining/terminating sessions
+  - **Layer 4 — Transport:** End-to-end delivery, segmentation (TCP, UDP, port numbers)
+  - **Layer 3 — Network:** Logical addressing & routing (IP, ICMP, routers)
+  - **Layer 2 — Data Link:** Framing & MAC addressing (Ethernet, switches)
+  - **Layer 1 — Physical:** Bits over wire/wireless (cables, signals, NICs)
+- Used Packet Tracer's **Simulation Mode** to capture a packet and step through it layer by layer — watching encapsulation add headers on the way down and decapsulation strip them on the way up.
+- Mapped each Packet Tracer device to its OSI layer (hub = L1, switch = L2, router = L3).
+- Memorized mnemonic: *"Please Do Not Throw Sausage Pizza Away"* (L1 → L7) and *"All People Seem To Need Data Processing"* (L7 → L1).
+- Saw the difference between **OSI** (7 layers, theoretical) and **TCP/IP** (4 layers, practical).
 
 ---
 
